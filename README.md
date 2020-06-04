@@ -11,8 +11,8 @@
 ![Preferences window](https://i.imgur.com/ZwzYARu.png)  
 *preferences window*
 
-![Tray icon context menu](https://i.imgur.com/ZiPxWsv.png)
-*tray icon context menu*
+![Tray icon context menu](https://i.imgur.com/ZiPxWsv.png)<br>
+*tray context menu*
 
 
 ## Build

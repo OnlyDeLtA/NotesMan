@@ -5,17 +5,15 @@
  * Find option to search text inside notes. 
  * Portable app no installation required.
 
-![Main window](https://i.imgur.com/Xa9VXJ9.png)  
-*main window*
-
-![Editor window](https://i.imgur.com/9ayrjO5.png)
-*editor window*
+![Main and Editor window](https://i.imgur.com/t5SX2iH.png)  
+*main & editor window*
 
 ![Preferences window](https://i.imgur.com/ZwzYARu.png)  
 *preferences window*
 
 ![Tray icon context menu](https://i.imgur.com/ZiPxWsv.png)
 *tray icon context menu*
+
 
 ## Build
 

@@ -15,7 +15,7 @@
 *preferences window*
 
 ![Tray icon context menu](https://i.imgur.com/ZiPxWsv.png)
-
+*tray icon context menu*
 
 ## Build
 

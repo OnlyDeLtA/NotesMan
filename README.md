@@ -1,9 +1,12 @@
+
 ## Features
  * Add, View notes, Delete single or multiple notes. 
  * Create separate Groups for notes. Easily switch between Groups.
- * Swift Search to search notes using their title. 
+ * Move notes from one group to other.
+ * Quickly search for notes using their title.
  * Find option to search text inside notes. 
  * Portable app no installation required.
+
 
 ![Main and Editor window](https://i.imgur.com/t5SX2iH.png)  
 *main & editor window*
@@ -30,6 +33,6 @@ Icons are taken from the famfamfam silk icons and their license and terms can be
 ## Download
 
 Release binaries can be downloaded from [GitHub](https://github.com/OnlyDeLtA/NotesMan/releases).
- * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.0.1)
+ * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.1.1)
 
   *For Windows XP, Vista, 7, 8, 8.1, 10 (32\64-bit)*

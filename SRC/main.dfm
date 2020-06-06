@@ -1,7 +1,7 @@
 object NotesManMF: TNotesManMF
   Left = 0
   Top = 0
-  Caption = 'NotesMan v1.0'
+  Caption = 'NotesMan v1.1'
   ClientHeight = 641
   ClientWidth = 984
   Color = clBtnFace
@@ -10,10 +10,12 @@ object NotesManMF: TNotesManMF
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   Menu = mm1
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
@@ -228,6 +230,8 @@ object NotesManMF: TNotesManMF
       ViewStyle = vsReport
       OnData = lv1Data
       OnDblClick = lv1DblClick
+      OnKeyDown = lv1KeyDown
+      OnMouseDown = lv1MouseDown
     end
   end
   object pnl3: TPanel
@@ -250,14 +254,17 @@ object NotesManMF: TNotesManMF
       Caption = '&File'
       object Addnote1: TMenuItem
         Caption = 'Add note'
+        ShortCut = 16462
         OnClick = Addnote1Click
       end
       object Viewnote1: TMenuItem
         Caption = 'View note'
+        ShortCut = 16463
         OnClick = Viewnote1Click
       end
       object Deletenote1: TMenuItem
         Caption = 'Delete note'
+        ShortCut = 46
         OnClick = Deletenote1Click
       end
       object N1: TMenuItem
@@ -747,6 +754,24 @@ object NotesManMF: TNotesManMF
     object Exit2: TMenuItem
       Caption = 'Exit'
       OnClick = Exit2Click
+    end
+  end
+  object pm3: TPopupMenu
+    OnPopup = pm3Popup
+    Left = 472
+    Top = 224
+    object View1: TMenuItem
+      Caption = 'View'
+      ShortCut = 16463
+      OnClick = View1Click
+    end
+    object Delete1: TMenuItem
+      Caption = 'Delete'
+      ShortCut = 46
+      OnClick = Delete1Click
+    end
+    object MovetoGroup1: TMenuItem
+      Caption = 'Move to Group'
     end
   end
 end

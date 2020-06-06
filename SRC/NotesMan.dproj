@@ -106,17 +106,19 @@
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.0.1.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Simple &amp; portable notes managing app.;ProgramID=com.vnmsoftware.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.1.1.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.1.1.1;Comments=Simple &amp; portable notes managing app for windows.;ProgramID=com.vnmsoftware.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.0.1.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan64.exe;ProgramID=com.vnmsoftware.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=Simple &amp; portable notes managing app.</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.1.1.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan64.exe;ProgramID=com.vnmsoftware.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.1.1;Comments=Simple &amp; portable notes managing app for windows.</VerInfo_Keys>
         <Icon_MainIcon>NotesMan_Icon1.ico</Icon_MainIcon>
         <VerInfo_Release>1</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>

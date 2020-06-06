@@ -58,6 +58,10 @@ type
     AddfromClipboardd1: TMenuItem;
     N4: TMenuItem;
     GithubPage1: TMenuItem;
+    pm3: TPopupMenu;
+    View1: TMenuItem;
+    Delete1: TMenuItem;
+    MovetoGroup1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure btn1Click(Sender: TObject);
@@ -86,8 +90,16 @@ type
     procedure GithubPage1Click(Sender: TObject);
     procedure AboutNotesMan1Click(Sender: TObject);
     procedure trycn1Click(Sender: TObject);
+    procedure lv1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pm3Popup(Sender: TObject);
+    procedure Delete1Click(Sender: TObject);
+    procedure View1Click(Sender: TObject);
+    procedure lv1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
   private
     procedure HandlePopupItem(Sender: TObject);
+    procedure HandleSubPopupItem(Sender: TObject);
     procedure HandleDirectory;
     procedure WMApp (var msg: TMessage); message wm_App;
   public
@@ -130,7 +142,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Build Date: 02-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.1 Release 1'+ #13#10+'Build Date: 07-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -283,6 +295,11 @@ end;
 end;
 end;
 
+procedure TNotesManMF.Delete1Click(Sender: TObject);
+begin
+DeleteNote;
+end;
+
 procedure TNotesManMF.DeleteNote;
 var
 I:Integer;
@@ -300,9 +317,9 @@ begin
 Selected:=StrToInt(ListItem.Caption);
 DeleteFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]);
 Delete(Notes,Selected-1,1);
+end;
+end;
 WriteNotes(Group[Grp],Notes);
-end;
-end;
 FillTListView;
 end;
 end;
@@ -385,6 +402,15 @@ begin
   HandleDirectory;
 end;
 
+procedure TNotesManMF.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+if  ((Key = ^N) or (Key = ^n)) then
+    begin
+    Key:=#0;
+    AddNotes;
+    end;
+end;
+
 procedure TNotesManMF.FormResize(Sender: TObject);
 begin
 lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
@@ -441,6 +467,45 @@ Grp:=TMenuItem(Sender).MenuIndex;
 FillTListView;
 end;
 
+procedure TNotesManMF.HandleSubPopupItem(Sender: TObject);
+var
+I,len:Integer;
+ListItem: TListItem;
+Group2Notes: NArray;
+begin
+Group2Notes:=ReadNotes(Group[TMenuItem(Sender).Tag]);
+for I := 0 to (lv1.Items.Count-1) do
+begin
+ListItem:=lv1.Items.Item[I];
+if ListItem.Selected then
+begin
+len:=Length(Group2Notes);
+Selected:=StrToInt(ListItem.Caption);
+if len=0 then
+begin
+if not MoveFile(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1')) then
+Continue;
+end
+else
+begin
+if not MoveFile(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1))) then
+Continue;
+end;
+SetLength(Group2Notes,len+1);
+Setlength(Group2Notes[len],2);
+if len=0 then
+Group2Notes[len][0]:='1'
+else
+Group2Notes[len][0]:=IntToStr(strtoint(Group2Notes[len-1][0])+1);
+Group2Notes[len][1]:=Notes[Selected-1][1];
+Delete(Notes,Selected-1,1);
+end;
+end;
+WriteNotes(Group[Grp],Notes);
+WriteNotes(Group[TMenuItem(Sender).Tag],Group2Notes);
+FillTListView;
+end;
+
 procedure TNotesManMF.lv1Data(Sender: TObject; Item: TListItem);
 begin
 Item.Caption:=(Length(FilterNotes)-Item.Index).ToString;
@@ -464,6 +529,53 @@ finally
 Form2.Free;
 end;
 
+end;
+
+procedure TNotesManMF.lv1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key=VK_DELETE then
+begin
+Key:=0;
+DeleteNote;
+end;
+if (ssCtrl in Shift) and ((Key = Ord('o')) or (Key = Ord('O'))) then
+begin
+Key:=0;
+ViewNote;
+end;
+end;
+
+procedure TNotesManMF.lv1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+if (Button=mbRight) and (lv1.SelCount<>0) then
+begin
+pm3.Popup(Mouse.CursorPos.X,Mouse.CursorPos.Y);
+end;
+end;
+
+procedure TNotesManMF.pm3Popup(Sender: TObject);
+var
+  I : Integer;
+  SubMenu : array of TMenuItem;
+begin
+if lv1.SelCount=1 then
+pm3.Items[0].Enabled:=True
+else
+pm3.Items[0].Enabled:=False;
+
+SetLength(SubMenu,Length(Group));
+pm3.Items[2].Clear;
+  for I := 0 to (Length(Group)-1) do begin
+    SubMenu[I] := TMenuItem.Create(pm3.Items[2]);
+    SubMenu[I].Caption:=Group[I];
+    SubMenu[I].Tag:=I;
+    SubMenu[I].OnClick:=HandleSubPopupItem;
+    if Group[I]=Group[Grp] then
+    SubMenu[I].Enabled:=False;
+  end;
+  pm3.Items[2].Add(SubMenu);
 end;
 
 procedure TNotesManMF.Preferences1Click(Sender: TObject);
@@ -574,7 +686,16 @@ begin
   WindowState:=wsNormal;
   Show;
   Application.BringToFront;
+end
+else
+begin
+  SetForegroundWindow(Form2.Handle);
 end;
+end;
+
+procedure TNotesManMF.View1Click(Sender: TObject);
+begin
+ ViewNote;
 end;
 
 procedure TNotesManMF.ViewNote;
@@ -612,7 +733,9 @@ begin
   WindowState:=wsNormal;
   Show;
   Application.BringToFront;
-end;
+end
+else
+SetForegroundWindow(Form2.Handle);
 end;
 
 procedure TNotesManMF.WriteSettings;

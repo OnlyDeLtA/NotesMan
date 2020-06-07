@@ -8,15 +8,15 @@
  * Find option to search text inside notes. 
  * Portable app no installation required.
 
+## Screens
 
 ![Main and Editor window](https://i.postimg.cc/fWCVJL7r/notesman-pic1.png)
-*main & editor window*
+<br>*main & editor window*
 
 ![Preferences window](https://i.postimg.cc/50t6mSpF/sshot-165.png)  
-*preferences window*
+<br>*preferences window*
 
-![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>
-*tray context menu*
+![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>*tray context menu*
 
 
 ## Build

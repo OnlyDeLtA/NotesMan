@@ -9,7 +9,7 @@
  * Portable app no installation required.
 
 
-![Main and Editor window](https://i.postimg.cc/FHK8NfPV/sshot-163.png)))  
+![Main and Editor window](https://i.postimg.cc/fWCVJL7r/notesman-pic1.png)
 *main & editor window*
 
 ![Preferences window](https://i.postimg.cc/50t6mSpF/sshot-165.png)  

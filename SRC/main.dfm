@@ -1,7 +1,7 @@
 object NotesManMF: TNotesManMF
   Left = 0
   Top = 0
-  Caption = 'NotesMan v1.1'
+  Caption = 'NotesMan v1.2'
   ClientHeight = 641
   ClientWidth = 984
   Color = clBtnFace

@@ -3,7 +3,7 @@ unit helper;
 
 interface
 uses
-System.sysutils,System.Classes,System.strutils;
+System.sysutils,System.Classes,System.strutils, Winapi.Windows;
 
 type
 NArray= array of TArray<string>;
@@ -13,6 +13,7 @@ function ReadNotes(const grp: String): NArray;
 function ReadGroup: GArray;
 procedure WriteNotes(const grp: String; Notes: NArray);
 procedure WriteGroup(Group: GArray);
+function MoveFileA(f1: PWideChar; f2: PWideChar; Replace:Boolean=False): Boolean;
 
 implementation
 
@@ -104,4 +105,10 @@ finally
 wstrm.Free;
 end;
 end;
+
+function MoveFileA(f1: PWideChar; f2: PWideChar; Replace:Boolean=False): Boolean;
+begin
+Result:=CopyFile(f1,f2,Replace) and DeleteFile(f1);
+end;
+
 end.

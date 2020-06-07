@@ -331,8 +331,17 @@ len: Integer;
 begin
 if Exist then
 begin
+if SearchActive then
+begin
+Notes[StrToInt(FilterNotes[Selected-1][2])][1]:=edt1.Text;
+FilterNotes[Selected-1][1]:=edt1.Text;
+RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8);
+end
+else
+begin
 Notes[Selected-1][1]:=edt1.Text;
 RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
+end;
 WriteNotes(Group[Grp], Notes);
 Form1.FillTListView;
 end
@@ -344,7 +353,7 @@ begin
 Notes[len-1][1]:=edt1.Text;
 RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len-1][0],TEncoding.UTF8);
 WriteNotes(Group[Grp], Notes);
-Form1.FillTListView;
+Form1.FillTListView(True);
 end
 else
 begin
@@ -358,7 +367,7 @@ Notes[len][0]:=IntToStr(strtoint(Notes[len-1][0])+1);
 Notes[len][1]:=edt1.Text;
 RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len][0],TEncoding.UTF8);
 WriteNotes(Group[Grp], Notes);
-Form1.FillTListView;
+Form1.FillTListView(True);
 btnSave:=True;
 end;
 end;

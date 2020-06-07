@@ -9,7 +9,8 @@ uses
   Vcl.Bind.Editors, Data.Bind.EngExt, Vcl.Bind.DBEngExt, Data.Bind.Components,
   Data.Bind.ObjectScope, System.ImageList, Vcl.ImgList, Vcl.Buttons, Vcl.ToolWin,
   Vcl.StdActns, Vcl.Menus, Vcl.ActnList, System.Actions, editorshow,System.IniFiles,
-  System.Win.TaskbarCore, Vcl.Taskbar, IOUtils, helper, setting, Vcl.AppEvnts,ShellApi, System.UItypes;
+  System.Win.TaskbarCore, Vcl.Taskbar, IOUtils, helper, setting, Vcl.AppEvnts,ShellApi, System.UItypes,
+  System.Math;
 
 type
   TNotesManMF = class(TForm)
@@ -103,7 +104,7 @@ type
     procedure HandleDirectory;
     procedure WMApp (var msg: TMessage); message wm_App;
   public
-    procedure FillTListView;
+    procedure FillTListView(IgnoreSearchActive: Boolean=False);
     procedure FillGroupMenu;
     procedure CheckDefault;
     procedure AddNotes;
@@ -124,6 +125,7 @@ var
   LItem: TListItem;
   Selected: Integer;
   Exist: Boolean=False;
+  SearchActive: Boolean=False;
 //Settings
   RememberMWS: Boolean;
   RememberMWP: Boolean;
@@ -142,7 +144,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.1 Release 1'+ #13#10+'Build Date: 07-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 1'+ #13#10+'Build Date: 08-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -224,21 +226,24 @@ if btn12.Text='' then
 begin
 btn12.RightButton.ImageIndex:=7;
 FilterNotes:=Notes;
+SearchActive:=False;
 end
 else
 begin
 J:=0;
 btn12.RightButton.ImageIndex:=8;
 Setlength(FilterNotes,0);
-for I := High(Notes) downto Low(Notes) do
+for I := Low(Notes) to High(Notes) do
 begin
 if ContainsText(Notes[I][1],string(btn12.Text))then
 begin
 Inc(J,1);
 Setlength(FilterNotes,J);
-Setlength(FilterNotes[J-1],2);
+Setlength(FilterNotes[J-1],3);
 FilterNotes[J-1][0]:=Notes[I][0];
 FilterNotes[J-1][1]:=Notes[I][1];
+FilterNotes[J-1][2]:=I.ToString;
+SearchActive:=True;
 end;
 end;
 end;
@@ -304,22 +309,37 @@ procedure TNotesManMF.DeleteNote;
 var
 I:Integer;
 ListItem: TListItem;
+TempFilterNotes: NArray;
 begin
 if lv1.SelCount<>0 then
 begin
 if Application.MessageBox('Do you Really want to '+#10+' delete selected note?','',(MB_YESNO))=ID_YES then
 begin
+TempFilterNotes:=FilterNotes;
 for I := 0 to (lv1.Items.Count-1) do
 begin
 ListItem:=lv1.Items.Item[I];
 if ListItem.Selected then
 begin
 Selected:=StrToInt(ListItem.Caption);
-DeleteFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]);
+if SearchActive then
+begin
+if not DeleteFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]) then
+Continue;
+Delete(Notes,StrToInt(FilterNotes[Selected-1][2]),1);
+Delete(TempFilterNotes,Selected-1,1);
+end
+else
+begin
+if not DeleteFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]) then
+Continue;
 Delete(Notes,Selected-1,1);
+Delete(TempFilterNotes,Selected-1,1);
+end;
 end;
 end;
 WriteNotes(Group[Grp],Notes);
+FilterNotes:=TempFilterNotes;
 FillTListView;
 end;
 end;
@@ -361,10 +381,16 @@ pm1.Items.Clear;
 
 end;
 
-procedure TNotesManMF.FillTListView;
+procedure TNotesManMF.FillTListView(IgnoreSearchActive: Boolean=False);
 begin
 Notes:=ReadNotes(Group[Grp]);
+if (not SearchActive) then
 FilterNotes:=Notes;
+if IgnoreSearchActive then
+begin
+btn12.Text:=EmptyStr;
+FilterNotes:=Notes;
+end;
 lv1.items.Count:=Length(FilterNotes);
 lv1.Invalidate;
 //lv1.Clear;
@@ -464,15 +490,16 @@ pm1.Items[I].Checked:=False;
 end;
 TMenuItem(Sender).Checked:=True;
 Grp:=TMenuItem(Sender).MenuIndex;
-FillTListView;
+FillTListView(True);
 end;
 
 procedure TNotesManMF.HandleSubPopupItem(Sender: TObject);
 var
 I,len:Integer;
 ListItem: TListItem;
-Group2Notes: NArray;
+Group2Notes, TempFilterNotes: NArray;
 begin
+TempFilterNotes:=FilterNotes;
 Group2Notes:=ReadNotes(Group[TMenuItem(Sender).Tag]);
 for I := 0 to (lv1.Items.Count-1) do
 begin
@@ -483,13 +510,29 @@ len:=Length(Group2Notes);
 Selected:=StrToInt(ListItem.Caption);
 if len=0 then
 begin
-if not MoveFile(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1')) then
+if SearchActive then
+begin
+if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1'),True) then
 Continue;
 end
 else
 begin
-if not MoveFile(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1))) then
+if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1'),True) then
 Continue;
+end;
+end
+else
+begin
+if SearchActive then
+begin
+if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1)),True) then
+Continue;
+end
+else
+begin
+if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1)),True) then
+Continue;
+end;
 end;
 SetLength(Group2Notes,len+1);
 Setlength(Group2Notes[len],2);
@@ -497,38 +540,35 @@ if len=0 then
 Group2Notes[len][0]:='1'
 else
 Group2Notes[len][0]:=IntToStr(strtoint(Group2Notes[len-1][0])+1);
+if SearchActive then
+Group2Notes[len][1]:=Notes[StrToInt(FilterNotes[Selected-1][2])][1]
+else
 Group2Notes[len][1]:=Notes[Selected-1][1];
+
+Delete(TempFilterNotes,Selected-1,1);
+if SearchActive then
+Delete(Notes,StrToInt(FilterNotes[Selected-1][2]),1)
+else
 Delete(Notes,Selected-1,1);
 end;
 end;
 WriteNotes(Group[Grp],Notes);
 WriteNotes(Group[TMenuItem(Sender).Tag],Group2Notes);
+FilterNotes:=TempFilterNotes;
 FillTListView;
 end;
 
 procedure TNotesManMF.lv1Data(Sender: TObject; Item: TListItem);
 begin
+if not InRange(Item.Index, 0, Length(FilterNotes) - 1) then
+Exit;
 Item.Caption:=(Length(FilterNotes)-Item.Index).ToString;
 Item.SubItems.Add(FilterNotes[Length(FilterNotes)-Item.Index-1][1]);
 end;
 
 procedure TNotesManMF.lv1DblClick(Sender: TObject);
 begin
-Form2:=TForm2.Create(nil);
-try
-if lv1.SelCount=1 then
-begin
-Exist:=True;
-Form2.edt1.Text:=lv1.Selected.SubItems[0];
-Selected:=StrToInt(lv1.Selected.Caption);
-Form2.RichEdit1.Lines.LoadFromFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
-Form2.ShowModal;
-Exist:=False;
-end;
-finally
-Form2.Free;
-end;
-
+ViewNote;
 end;
 
 procedure TNotesManMF.lv1KeyDown(Sender: TObject; var Key: Word;
@@ -707,6 +747,9 @@ begin
 Exist:=True;
 Form2.edt1.Text:=lv1.Selected.SubItems[0];
 Selected:=StrToInt(lv1.Selected.Caption);
+if SearchActive then
+Form2.RichEdit1.Lines.LoadFromFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8)
+else
 Form2.RichEdit1.Lines.LoadFromFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
 Form2.ShowModal;
 Exist:=False;

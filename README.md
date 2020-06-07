@@ -1,4 +1,5 @@
 
+
 ## Features
  * Add, View notes, Delete single or multiple notes. 
  * Create separate Groups for notes. Easily switch between Groups.
@@ -8,13 +9,13 @@
  * Portable app no installation required.
 
 
-![Main and Editor window](https://i.imgur.com/t5SX2iH.png)  
+![Main and Editor window](https://i.postimg.cc/FHK8NfPV/sshot-163.png)))  
 *main & editor window*
 
-![Preferences window](https://i.imgur.com/ZwzYARu.png)  
+![Preferences window](https://i.postimg.cc/50t6mSpF/sshot-165.png)  
 *preferences window*
 
-![Tray icon context menu](https://i.imgur.com/ZiPxWsv.png)<br>
+![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>
 *tray context menu*
 
 
@@ -33,6 +34,6 @@ Icons are taken from the famfamfam silk icons and their license and terms can be
 ## Download
 
 Release binaries can be downloaded from [GitHub](https://github.com/OnlyDeLtA/NotesMan/releases).
- * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.1.1)
+ * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.1)
 
   *For Windows XP, Vista, 7, 8, 8.1, 10 (32\64-bit)*

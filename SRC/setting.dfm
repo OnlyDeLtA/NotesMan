@@ -4,8 +4,8 @@ object Form3: TForm3
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Preferences - NotesMan'
-  ClientHeight = 273
-  ClientWidth = 361
+  ClientHeight = 290
+  ClientWidth = 369
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,18 +20,16 @@ object Form3: TForm3
   object pnl1: TPanel
     Left = 0
     Top = 0
-    Width = 361
-    Height = 239
+    Width = 369
+    Height = 256
     Align = alClient
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 370
-    ExplicitHeight = 249
     object grp1: TGroupBox
       Left = 7
       Top = 8
-      Width = 346
+      Width = 354
       Height = 113
       Caption = 'General'
       TabOrder = 0
@@ -63,12 +61,12 @@ object Form3: TForm3
     object grp2: TGroupBox
       Left = 7
       Top = 134
-      Width = 346
-      Height = 93
+      Width = 354
+      Height = 112
       Caption = 'Editor'
       TabOrder = 1
       object lbl1: TLabel
-        Left = 187
+        Left = 195
         Top = 25
         Width = 51
         Height = 13
@@ -91,7 +89,7 @@ object Form3: TForm3
         TabOrder = 1
       end
       object cbb1: TComboBox
-        Left = 244
+        Left = 252
         Top = 22
         Width = 88
         Height = 21
@@ -105,19 +103,25 @@ object Form3: TForm3
           '14'
           '15')
       end
+      object chk6: TCheckBox
+        Left = 19
+        Top = 70
+        Width = 182
+        Height = 17
+        Caption = 'Auto Save notes OnExit'
+        TabOrder = 3
+      end
     end
   end
   object pnl2: TPanel
     Left = 0
-    Top = 239
-    Width = 361
+    Top = 256
+    Width = 369
     Height = 34
     Align = alBottom
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 249
-    ExplicitWidth = 370
     object btn2: TButton
       Left = 88
       Top = 3

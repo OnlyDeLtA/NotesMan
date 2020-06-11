@@ -13,7 +13,7 @@
 ![Main and Editor window](https://i.postimg.cc/fWCVJL7r/notesman-pic1.png)
 <br>*main & editor window*
 
-![Preferences window](https://i.postimg.cc/50t6mSpF/sshot-165.png)  
+![Preferences window](https://i.postimg.cc/L5JgZz6H/sshot-176.png)  
 <br>*preferences window*
 
 ![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>*tray context menu*
@@ -34,6 +34,6 @@ Icons are taken from the famfamfam silk icons and their license and terms can be
 ## Download
 
 Release binaries can be downloaded from [GitHub](https://github.com/OnlyDeLtA/NotesMan/releases).
- * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.1)
+ * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.2)
 
   *For Windows XP, Vista, 7, 8, 8.1, 10 (32\64-bit)*

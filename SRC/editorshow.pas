@@ -72,40 +72,6 @@ main;
 
 procedure TForm2.btn1Click(Sender: TObject);
 begin
-//if Exist then
-//begin
-//Notes[Selected-1][1]:=edt1.Text;
-//RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
-//WriteNotes(Group[Grp], Notes);
-//Form1.FillTListView;
-//end
-//else
-//begin
-//len:=Length(Notes);
-//if btnSave then
-//begin
-//Notes[len-1][1]:=edt1.Text;
-//RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len-1][0],TEncoding.UTF8);
-//WriteNotes(Group[Grp], Notes);
-//Form1.FillTListView;
-//end
-//else
-//begin
-//SetLength(Notes,len+1);
-//Setlength(Notes[len],2);
-//if len=0 then
-//Notes[len][0]:='1'
-//else
-//Notes[len][0]:=IntToStr(strtoint(Notes[len-1][0])+1);
-//
-//Notes[len][1]:=edt1.Text;
-//RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len][0],TEncoding.UTF8);
-//WriteNotes(Group[Grp], Notes);
-//Form1.FillTListView;
-//btnSave:=True;
-//end;
-//end;
-//btn1.Caption:='Save';
 Save;
 end;
 
@@ -191,12 +157,14 @@ begin
 end;
 
 
-
-
 procedure TForm2.edt1Change(Sender: TObject);
 begin
 if EditorFormexist then
+begin
+if not Autosave then
 btn1.Caption:='*Save';
+end;
+
 end;
 
 procedure TForm2.edt1KeyPress(Sender: TObject; var Key: Char);
@@ -218,6 +186,8 @@ procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
 var
 Ini: TInifile;
 begin
+if (Autosave) and ((edt1.Text<>'') or (RichEdit1.Lines.Text<>'')) then
+Save;
 btnSave:=False;
    Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.INI' ) );
    try
@@ -312,7 +282,10 @@ end;
 procedure TForm2.RichEdit1Change(Sender: TObject);
 begin
 if EditorFormexist then
+begin
+if not Autosave then
 btn1.Caption:='*Save';
+end;
 end;
 
 procedure TForm2.RichEdit1KeyDown(Sender: TObject; var Key: Word;
@@ -335,12 +308,12 @@ if SearchActive then
 begin
 Notes[StrToInt(FilterNotes[Selected-1][2])][1]:=edt1.Text;
 FilterNotes[Selected-1][1]:=edt1.Text;
-RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8);
+RichEdit1.Lines.SaveToFile(DefaultDir + Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8);
 end
 else
 begin
 Notes[Selected-1][1]:=edt1.Text;
-RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
+RichEdit1.Lines.SaveToFile(DefaultDir + Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
 end;
 WriteNotes(Group[Grp], Notes);
 Form1.FillTListView;
@@ -351,7 +324,7 @@ len:=Length(Notes);
 if btnSave then
 begin
 Notes[len-1][1]:=edt1.Text;
-RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len-1][0],TEncoding.UTF8);
+RichEdit1.Lines.SaveToFile(DefaultDir + Group[Grp]+'\'+Notes[len-1][0],TEncoding.UTF8);
 WriteNotes(Group[Grp], Notes);
 Form1.FillTListView(True);
 end
@@ -365,7 +338,7 @@ else
 Notes[len][0]:=IntToStr(strtoint(Notes[len-1][0])+1);
 
 Notes[len][1]:=edt1.Text;
-RichEdit1.Lines.SaveToFile('Notes\'+Group[Grp]+'\'+Notes[len][0],TEncoding.UTF8);
+RichEdit1.Lines.SaveToFile(DefaultDir + Group[Grp]+'\'+Notes[len][0],TEncoding.UTF8);
 WriteNotes(Group[Grp], Notes);
 Form1.FillTListView(True);
 btnSave:=True;

@@ -160,7 +160,7 @@ object NotesManMF: TNotesManMF
     end
     object btn12: TButtonedEdit
       Left = 757
-      Top = 7
+      Top = 8
       Width = 224
       Height = 25
       Anchors = [akTop, akRight]
@@ -298,6 +298,10 @@ object NotesManMF: TNotesManMF
       object GithubPage1: TMenuItem
         Caption = 'Github Page'
         OnClick = GithubPage1Click
+      end
+      object ReportBug1: TMenuItem
+        Caption = 'Report Bug'
+        OnClick = ReportBug1Click
       end
       object AboutNotesMan1: TMenuItem
         Caption = 'About NotesMan'

@@ -16,6 +16,8 @@ procedure WriteGroup(Group: GArray);
 function MoveFileA(f1: PWideChar; f2: PWideChar; Replace:Boolean=False): Boolean;
 
 implementation
+uses
+main;
 
 function SplitAtFO(const str: string; const substr: string): TArray<string>;
 var
@@ -36,9 +38,9 @@ rstrm: Tstreamreader;
 I: Integer;
 begin
 I:=0;
-if FileExists('Notes\'+grp+'\Index.txt') then
+if FileExists(DefaultDir + grp+'\Index.txt') then
 begin
-rstrm:=Tstreamreader.create('Notes\'+grp+'\Index.txt');
+rstrm:=Tstreamreader.create(DefaultDir + grp+'\Index.txt');
 try
 while not rstrm.endofstream do
 begin
@@ -60,7 +62,7 @@ rstrm: Tstreamreader;
 I: Integer;
 begin
 I:=0;
-rstrm:=Tstreamreader.create('Notes\Index.txt');
+rstrm:=Tstreamreader.create(DefaultDir + 'Index.txt');
 try
 while not rstrm.endofstream do
 begin
@@ -79,7 +81,7 @@ var
 wstrm: Tstreamwriter;
 I: Integer;
 begin
-wstrm:= TStreamWriter.Create('Notes\Index.txt');
+wstrm:= TStreamWriter.Create(DefaultDir + 'Index.txt');
 try
 for I := Low(Group) to High(Group) do
   begin
@@ -95,7 +97,7 @@ var
 wstrm: Tstreamwriter;
 I: Integer;
 begin
-wstrm:=TStreamWriter.Create('Notes\'+grp+'\Index.txt');
+wstrm:=TStreamWriter.Create(DefaultDir +grp+'\Index.txt');
 try
 for I := Low(Notes) to High(Notes) do
   begin

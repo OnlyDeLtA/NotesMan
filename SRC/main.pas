@@ -63,6 +63,7 @@ type
     View1: TMenuItem;
     Delete1: TMenuItem;
     MovetoGroup1: TMenuItem;
+    ReportBug1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure btn1Click(Sender: TObject);
@@ -98,6 +99,7 @@ type
     procedure View1Click(Sender: TObject);
     procedure lv1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure ReportBug1Click(Sender: TObject);
   private
     procedure HandlePopupItem(Sender: TObject);
     procedure HandleSubPopupItem(Sender: TObject);
@@ -126,6 +128,7 @@ var
   Selected: Integer;
   Exist: Boolean=False;
   SearchActive: Boolean=False;
+  DefaultDir: string;
 //Settings
   RememberMWS: Boolean;
   RememberMWP: Boolean;
@@ -133,6 +136,7 @@ var
   RememberEWS: Boolean;
   RememberEWP: Boolean;
   EditorFontSize: Integer;
+  Autosave: Boolean;
 //VariableforHandlingTrayClicks
   trMax: Boolean;
   addfromclipb: Boolean=False;
@@ -144,7 +148,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 1'+ #13#10+'Build Date: 08-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 2'+ #13#10+'Build Date: 11-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -287,10 +291,10 @@ procedure TNotesManMF.CheckDefault;
 var
 wstrm: Tstreamwriter;
 begin
-if not FileExists('Notes\Index.txt') then
+if not FileExists(DefaultDir + 'Index.txt') then
 begin
-ForceDirectories(ExtractFilePath(Application.ExeName)+'\Notes');
-wstrm:=TStreamWriter.Create('Notes\Index.txt');
+ForceDirectories(ExtractFilePath(Application.ExeName)+ DefaultDir);
+wstrm:=TStreamWriter.Create(DefaultDir + 'Index.txt');
 try
 wstrm.WriteLine('Default');
 Grp:=0;
@@ -307,13 +311,13 @@ end;
 
 procedure TNotesManMF.DeleteNote;
 var
-I:Integer;
+I,NIndex:Integer;
 ListItem: TListItem;
 TempFilterNotes: NArray;
 begin
 if lv1.SelCount<>0 then
 begin
-if Application.MessageBox('Do you Really want to '+#10+' delete selected note?','',(MB_YESNO))=ID_YES then
+if Application.MessageBox('Do you Really want to '+#10+' delete selected note(s)?','',(MB_YESNO))=ID_YES then
 begin
 TempFilterNotes:=FilterNotes;
 for I := 0 to (lv1.Items.Count-1) do
@@ -322,20 +326,19 @@ ListItem:=lv1.Items.Item[I];
 if ListItem.Selected then
 begin
 Selected:=StrToInt(ListItem.Caption);
+
 if SearchActive then
-begin
-if not DeleteFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]) then
-Continue;
-Delete(Notes,StrToInt(FilterNotes[Selected-1][2]),1);
-Delete(TempFilterNotes,Selected-1,1);
-end
+NIndex:=StrToInt(FilterNotes[Selected-1][2])
 else
-begin
-if not DeleteFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]) then
+NIndex:=Selected-1;
+
+if not DeleteFile(DefaultDir +Group[Grp]+'\'+Notes[NIndex][0]) then
 Continue;
-Delete(Notes,Selected-1,1);
+
+ListItem.Selected:=False;
+Delete(Notes,NIndex,1);
 Delete(TempFilterNotes,Selected-1,1);
-end;
+
 end;
 end;
 WriteNotes(Group[Grp],Notes);
@@ -473,9 +476,9 @@ I: Integer;
 begin
 for I := Low(Group) to High(Group) do
 begin
-if not DirectoryExists('Notes\'+Group[I]) then
+if not DirectoryExists(DefaultDir + Group[I]) then
 begin
-ForceDirectories(ExtractFilePath(Application.ExeName)+'\Notes\'+Group[I]);
+ForceDirectories(ExtractFilePath(Application.ExeName)+'\'+DefaultDir+ Group[I]);
 end;
 end;
 end;
@@ -495,8 +498,9 @@ end;
 
 procedure TNotesManMF.HandleSubPopupItem(Sender: TObject);
 var
-I,len:Integer;
+I,len,NIndex:Integer;
 ListItem: TListItem;
+NFileName: string;
 Group2Notes, TempFilterNotes: NArray;
 begin
 TempFilterNotes:=FilterNotes;
@@ -508,48 +512,28 @@ if ListItem.Selected then
 begin
 len:=Length(Group2Notes);
 Selected:=StrToInt(ListItem.Caption);
+
+if SearchActive then
+NIndex:=StrToInt(FilterNotes[Selected-1][2])
+else
+NIndex:=Selected-1;
+
 if len=0 then
-begin
-if SearchActive then
-begin
-if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1'),True) then
-Continue;
-end
+NFileName:='1'
 else
-begin
-if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+'1'),True) then
+NFileName:=IntToStr(strtoint(Group2Notes[len-1][0])+1);
+
+if not MoveFileA(PWideChar(DefaultDir + Group[Grp]+'\'+Notes[NIndex][0]),PWideChar(DefaultDir +Group[TMenuItem(Sender).Tag]+'\'+NFileName),True) then
 Continue;
-end;
-end
-else
-begin
-if SearchActive then
-begin
-if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1)),True) then
-Continue;
-end
-else
-begin
-if not MoveFileA(PWideChar('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0]),PWideChar('Notes\'+Group[TMenuItem(Sender).Tag]+'\'+IntToStr(strtoint(Group2Notes[len-1][0])+1)),True) then
-Continue;
-end;
-end;
+
 SetLength(Group2Notes,len+1);
 Setlength(Group2Notes[len],2);
-if len=0 then
-Group2Notes[len][0]:='1'
-else
-Group2Notes[len][0]:=IntToStr(strtoint(Group2Notes[len-1][0])+1);
-if SearchActive then
-Group2Notes[len][1]:=Notes[StrToInt(FilterNotes[Selected-1][2])][1]
-else
-Group2Notes[len][1]:=Notes[Selected-1][1];
 
+Group2Notes[len][0]:=NFileName;
+Group2Notes[len][1]:=Notes[NIndex][1];
+
+Delete(Notes,NIndex,1);
 Delete(TempFilterNotes,Selected-1,1);
-if SearchActive then
-Delete(Notes,StrToInt(FilterNotes[Selected-1][2]),1)
-else
-Delete(Notes,Selected-1,1);
 end;
 end;
 WriteNotes(Group[Grp],Notes);
@@ -639,8 +623,10 @@ Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.ini' ) );
     MinimizeST:= Ini.ReadBool('General','MinimizeST',False);
     RememberEWS:= Ini.ReadBool('General','RememberEWS',False);
     RememberEWP:= Ini.ReadBool('General','RememberEWP',False);
+    DefaultDir:=Ini.ReadString('General','DefaultDir','Notes\');
     Grp:=Ini.ReadInteger( 'General', 'ActiveGroup', 0);
     EditorFontSize:=Ini.ReadInteger('Editor','EditorFontSize',11);
+    Autosave:=Ini.ReadBool('Editor','AutoSave',False);
     if RememberMWS then
      begin
      Height:= Ini.ReadInteger('General', 'MHeight', Height);
@@ -683,7 +669,7 @@ begin
 begin
 if Application.MessageBox('Do you really want to '+#10+' delete entered group.?','',(MB_YESNO))=ID_YES then
 begin
-TDirectory.Delete('Notes\'+Group[I],True);
+TDirectory.Delete(DefaultDir +Group[I],True);
 Delete(Group,I,1);
 if Grp=Length(Group) then
 Dec(Grp,1);
@@ -699,6 +685,11 @@ end;
 procedure TNotesManMF.Removegroup1Click(Sender: TObject);
 begin
 RemoveGroup;
+end;
+
+procedure TNotesManMF.ReportBug1Click(Sender: TObject);
+begin
+ ShellExecute(0, 'open', 'https://github.com/OnlyDeLtA/NotesMan/issues', nil, nil, SW_SHOWNORMAL);
 end;
 
 procedure TNotesManMF.ShowWindow1Click(Sender: TObject);
@@ -748,9 +739,9 @@ Exist:=True;
 Form2.edt1.Text:=lv1.Selected.SubItems[0];
 Selected:=StrToInt(lv1.Selected.Caption);
 if SearchActive then
-Form2.RichEdit1.Lines.LoadFromFile('Notes\'+Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8)
+Form2.RichEdit1.Lines.LoadFromFile(DefaultDir + Group[Grp]+'\'+Notes[StrToInt(FilterNotes[Selected-1][2])][0],TEncoding.UTF8)
 else
-Form2.RichEdit1.Lines.LoadFromFile('Notes\'+Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
+Form2.RichEdit1.Lines.LoadFromFile(DefaultDir + Group[Grp]+'\'+Notes[Selected-1][0],TEncoding.UTF8);
 Form2.ShowModal;
 Exist:=False;
 end;
@@ -792,6 +783,7 @@ begin
      Ini.WriteBool('General','MinimizeST',MinimizeST);
      Ini.WriteBool('General','RememberEWS',RememberEWS);
      Ini.WriteBool('General','RememberEWP',RememberEWP);
+     Ini.WriteString('General','DefaultDir',DefaultDir);
      Ini.WriteInteger( 'General', 'ActiveGroup', Grp);
      Ini.WriteInteger( 'General', 'MTop', Top);
      Ini.WriteInteger( 'General', 'MLeft', Left);
@@ -806,6 +798,7 @@ begin
      Ini.WriteBool( 'General', 'WindowState', False );
      end;
      Ini.WriteInteger( 'Editor', 'EditorFontSize', EditorFontSize);
+     Ini.WriteBool('Editor','AutoSave',Autosave);
    finally
      Ini.Free;
    end;

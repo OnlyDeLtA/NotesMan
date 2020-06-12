@@ -148,7 +148,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 3'+ #13#10+'Build Date: 12-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 4'+ #13#10+'Build Date: 12-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -523,7 +523,7 @@ NFileName:='1'
 else
 NFileName:=IntToStr(strtoint(Group2Notes[len-1][0])+1);
 
-if not MoveFileA(PWideChar(DefaultDir + Group[Grp]+'\'+Notes[NIndex][0]),PWideChar(DefaultDir +Group[TMenuItem(Sender).Tag]+'\'+NFileName),True) then
+if not MoveFileA(PWideChar(DefaultDir + Group[Grp]+'\'+Notes[NIndex][0]),PWideChar(DefaultDir +Group[TMenuItem(Sender).Tag]+'\'+NFileName),False) then
 Continue;
 
 SetLength(Group2Notes,len+1);
@@ -617,7 +617,10 @@ procedure TNotesManMF.ReadSettings;
 var
    Ini: TIniFile;
 begin
-Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.ini' ) );
+if FileExists('NotesMan64.ini') then
+MoveFileA(PWideChar(ExtractFilePath(Application.ExeName) +'NotesMan64.ini'),PWideChar(ExtractFilePath(Application.ExeName) +'NotesMan.ini'),False);
+
+Ini := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'NotesMan.ini' );
    try
     RememberMWS:= Ini.ReadBool('General','RememberMWS',False);
     RememberMWP:= Ini.ReadBool('General','RememberMWP',False);
@@ -777,7 +780,7 @@ procedure TNotesManMF.WriteSettings;
 var
 Ini: TInifile;
 begin
-   Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.ini' ) );
+   Ini := TIniFile.Create( ExtractFilePath(Application.ExeName) + 'NotesMan.ini' );
    try
      Ini.WriteBool('General','RememberMWS',RememberMWS);
      Ini.WriteBool('General','RememberMWP',RememberMWP);

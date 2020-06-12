@@ -191,7 +191,7 @@ begin
 if (Autosave) and ((edt1.Text<>'') or (RichEdit1.Lines.Text<>'')) then
 Save;
 btnSave:=False;
-   Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.INI' ) );
+   Ini := TIniFile.Create( ExtractFilePath(Application.ExeName) + 'NotesMan.ini' );
    try
      if RememberEWP then
      begin
@@ -213,7 +213,7 @@ procedure TForm2.FormCreate(Sender: TObject);
 var
 Ini: TInifile;
 begin
-   Ini := TIniFile.Create( ChangeFileExt( Application.ExeName, '.INI' ) );
+   Ini := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'NotesMan.ini' );
    try
      if RememberEWP then
      begin

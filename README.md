@@ -34,6 +34,6 @@ Icons are taken from the famfamfam silk icons and their license and terms can be
 ## Download
 
 Release binaries can be downloaded from [GitHub](https://github.com/OnlyDeLtA/NotesMan/releases).
- * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.2)
+ * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.3)
 
   *For Windows XP, Vista, 7, 8, 8.1, 10 (32\64-bit)*

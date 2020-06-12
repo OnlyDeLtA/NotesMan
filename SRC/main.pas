@@ -148,7 +148,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 2'+ #13#10+'Build Date: 11-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 3'+ #13#10+'Build Date: 12-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -534,6 +534,7 @@ Group2Notes[len][1]:=Notes[NIndex][1];
 
 Delete(Notes,NIndex,1);
 Delete(TempFilterNotes,Selected-1,1);
+ListItem.Selected:=False;
 end;
 end;
 WriteNotes(Group[Grp],Notes);

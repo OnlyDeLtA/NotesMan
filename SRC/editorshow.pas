@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, helper,
-  Vcl.Buttons, Vcl.Menus, System.inifiles,Clipbrd;
+  Vcl.Buttons, Vcl.Menus, System.inifiles,Clipbrd,Winapi.RichEdit;
 
 
 type
@@ -30,6 +30,7 @@ type
     Clear1: TMenuItem;
     Delete1: TMenuItem;
     N1: TMenuItem;
+    Redo1: TMenuItem;
     procedure btn1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btn2Click(Sender: TObject);
@@ -51,6 +52,7 @@ type
     procedure pm1Popup(Sender: TObject);
     procedure edt1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
+    procedure Redo1Click(Sender: TObject);
   private
 
   public
@@ -246,7 +248,7 @@ EditorFormexist:=True;
 if addfromclipb then
 begin
 //RichEdit1.PasteFromClipboard;
-RichEdit1.SelText := Clipboard.AsText;
+RichEdit1.Perform(EM_REPLACESEL, 1, PWideChar(Clipboard.AsText));
 addfromclipb:=False;
 end;
 Richedit1.SetFocus;
@@ -255,7 +257,8 @@ end;
 procedure TForm2.Paste1Click(Sender: TObject);
 begin
 //RichEdit1.PasteFromClipboard;
-RichEdit1.SelText := Clipboard.AsText;
+//RichEdit1.SelText := Clipboard.AsText;
+RichEdit1.Perform(EM_REPLACESEL, 1, PWideChar(Clipboard.AsText));
 end;
 
 procedure TForm2.pm1Popup(Sender: TObject);
@@ -272,6 +275,11 @@ pm1.Items[2].Enabled:=True;
 pm1.Items[3].Enabled:=True;
 pm1.Items[6].Enabled:=True;
 end;
+end;
+
+procedure TForm2.Redo1Click(Sender: TObject);
+begin
+RichEdit1.Perform(EM_REDO,0,0);
 end;
 
 procedure TForm2.Repeat1Click(Sender: TObject);

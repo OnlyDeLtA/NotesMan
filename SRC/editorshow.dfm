@@ -184,9 +184,14 @@ object Form2: TForm2
     Left = 464
     Top = 525
     object Undo1: TMenuItem
-      Caption = '&Undo'
+      Caption = 'Undo'
       ShortCut = 16474
       OnClick = Undo1Click
+    end
+    object Redo1: TMenuItem
+      Caption = 'Redo'
+      ShortCut = 24666
+      OnClick = Redo1Click
     end
     object N1: TMenuItem
       Caption = '-'
@@ -197,17 +202,17 @@ object Form2: TForm2
       OnClick = Cut1Click
     end
     object Copy1: TMenuItem
-      Caption = '&Copy'
+      Caption = 'Copy'
       ShortCut = 16451
       OnClick = Copy1Click
     end
     object Paste1: TMenuItem
-      Caption = '&Paste'
+      Caption = 'Paste'
       ShortCut = 16470
       OnClick = Paste1Click
     end
     object Delete1: TMenuItem
-      Caption = '&Delete'
+      Caption = 'Delete'
       ShortCut = 46
       OnClick = Delete1Click
     end
@@ -215,7 +220,7 @@ object Form2: TForm2
       Caption = '-'
     end
     object Repeat1: TMenuItem
-      Caption = '&SelectAll   '
+      Caption = 'SelectAll   '
       ShortCut = 16449
       OnClick = Repeat1Click
     end
@@ -224,7 +229,7 @@ object Form2: TForm2
       OnClick = Clear1Click
     end
     object Find1: TMenuItem
-      Caption = '&Find...'
+      Caption = 'Find...'
       ShortCut = 16454
       OnClick = Find1Click
     end

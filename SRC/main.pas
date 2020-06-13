@@ -148,7 +148,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 4'+ #13#10+'Build Date: 12-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 5'+ #13#10+'Build Date: 13-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -442,7 +442,11 @@ end;
 
 procedure TNotesManMF.FormResize(Sender: TObject);
 begin
+if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
+else
 lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
+
 if Width<700 then
 Width:=700;
 if WindowState=wsMaximized then
@@ -462,7 +466,10 @@ end;
 procedure TNotesManMF.FormShow(Sender: TObject);
 begin
    lv1.SetFocus;
-   lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
+if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
+else
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
 end;
 
 procedure TNotesManMF.GithubPage1Click(Sender: TObject);
@@ -568,6 +575,11 @@ if (ssCtrl in Shift) and ((Key = Ord('o')) or (Key = Ord('O'))) then
 begin
 Key:=0;
 ViewNote;
+end;
+if (ssCtrl in Shift) and ((Key = Ord('a')) or (Key = Ord('A'))) then
+begin
+Key:=0;
+lv1.SelectAll;
 end;
 end;
 

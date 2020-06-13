@@ -103,10 +103,10 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_Release>5</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.2.4.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.2.4.1;Comments=Simple &amp; portable notes managing app for windows.;ProgramID=com.vnmsoftware.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.2.5.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan.exe;ProductName=$(MSBuildProjectName);ProductVersion=1.2.5.1;Comments=Simple &amp; portable notes managing app for windows.;ProgramID=com.vnmsoftware.$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -114,9 +114,9 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.2.4.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan64.exe;ProgramID=com.vnmsoftware.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.2.4.1;Comments=Simple &amp; portable notes managing app for windows.</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=VNM Software;FileDescription=NotesMan;FileVersion=1.2.5.1;InternalName=;LegalCopyright=VNM Software;LegalTrademarks=;OriginalFilename=NotesMan64.exe;ProgramID=com.vnmsoftware.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.2.5.1;Comments=Simple &amp; portable notes managing app for windows.</VerInfo_Keys>
         <Icon_MainIcon>NotesMan_Icon1.ico</Icon_MainIcon>
-        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_Release>5</VerInfo_Release>
         <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
     </PropertyGroup>

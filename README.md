@@ -10,10 +10,10 @@
 
 ## Screens
 
-![Main and Editor window](https://i.postimg.cc/fWCVJL7r/notesman-pic1.png)
+![Main and Editor window](https://i.imgur.com/Tm3iVcj.png)
 <br>*main & editor window*
 
-![Preferences window](https://i.postimg.cc/L5JgZz6H/sshot-176.png)  
+![Preferences window](https://i.imgur.com/r7HAz3M.png)  
 <br>*preferences window*
 
 ![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>*tray context menu*

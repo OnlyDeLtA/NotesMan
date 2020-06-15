@@ -50,6 +50,11 @@ object Form2: TForm2
       Width = 26
       Height = 26
       Anchors = [akTop, akRight]
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Segoe UI'
+      Font.Style = []
       Glyph.Data = {
         42020000424D4202000000000000420000002800000010000000100000000100
         10000300000000020000120B0000120B00000000000000000000007C0000E003
@@ -70,6 +75,7 @@ object Form2: TForm2
         FF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7F
         FF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7FFF7F
         FF7FFF7FFF7F}
+      ParentFont = False
       OnClick = btn2Click
     end
     object edt1: TEdit
@@ -113,7 +119,7 @@ object Form2: TForm2
       BevelInner = bvNone
       BevelOuter = bvNone
       BiDiMode = bdLeftToRight
-      Font.Charset = ANSI_CHARSET
+      Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
       Font.Name = 'Segoe UI'
@@ -148,7 +154,7 @@ object Form2: TForm2
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -12
-      Font.Name = 'Tahoma'
+      Font.Name = 'Segoe UI'
       Font.Style = []
       Glyph.Data = {
         42020000424D4202000000000000420000002800000010000000100000000100

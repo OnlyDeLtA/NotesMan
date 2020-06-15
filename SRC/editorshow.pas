@@ -265,14 +265,14 @@ procedure TForm2.pm1Popup(Sender: TObject);
 begin
 if Richedit1.SelLength=0 then
 begin
-pm1.Items[2].Enabled:=False;
 pm1.Items[3].Enabled:=False;
+pm1.Items[4].Enabled:=False;
 pm1.Items[6].Enabled:=False;
 end
 else
 begin
-pm1.Items[2].Enabled:=True;
 pm1.Items[3].Enabled:=True;
+pm1.Items[4].Enabled:=True;
 pm1.Items[6].Enabled:=True;
 end;
 end;

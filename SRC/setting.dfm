@@ -10,7 +10,7 @@ object Form3: TForm3
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -36,7 +36,7 @@ object Form3: TForm3
       object chk1: TCheckBox
         Left = 19
         Top = 24
-        Width = 145
+        Width = 158
         Height = 17
         Caption = 'Rememer window position'
         TabOrder = 0
@@ -51,8 +51,8 @@ object Form3: TForm3
       end
       object chk3: TCheckBox
         Left = 19
-        Top = 69
-        Width = 166
+        Top = 70
+        Width = 182
         Height = 17
         Caption = 'OnExit minimize to system tray'
         TabOrder = 2
@@ -68,7 +68,7 @@ object Form3: TForm3
       object lbl1: TLabel
         Left = 195
         Top = 25
-        Width = 51
+        Width = 53
         Height = 13
         Caption = 'Font Size: '
       end

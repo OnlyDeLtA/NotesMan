@@ -176,6 +176,11 @@ if  ((Key = ^s) or (Key = ^S)) then
     Key:=#0;
     Save;
     end;
+if  Ord(Key) = VK_ESCAPE then
+    begin
+    Key:=#0;
+    Close;
+    end;
 end;
 
 procedure TForm2.Find1Click(Sender: TObject);
@@ -299,6 +304,8 @@ end;
 procedure TForm2.RichEdit1KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    if Key=VK_ESCAPE then
+    Close;
     if (ssCtrl in Shift) and ((Key = Ord('s')) or (Key = Ord('S'))) then
     begin
     Key:=0;

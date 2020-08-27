@@ -64,6 +64,7 @@ type
     Delete1: TMenuItem;
     MovetoGroup1: TMenuItem;
     ReportBug1: TMenuItem;
+    stat1: TStatusBar;
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure btn1Click(Sender: TObject);
@@ -100,6 +101,8 @@ type
     procedure lv1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure ReportBug1Click(Sender: TObject);
+    procedure FormConstrainedResize(Sender: TObject; var MinWidth, MinHeight,
+      MaxWidth, MaxHeight: Integer);
   private
     procedure HandlePopupItem(Sender: TObject);
     procedure HandleSubPopupItem(Sender: TObject);
@@ -116,6 +119,7 @@ type
     procedure RemoveGroup;
     procedure ReadSettings;
     procedure WriteSettings;
+    procedure HandleComponentsWidth;
   end;
 
 var
@@ -148,7 +152,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 6'+ #13#10+'Build Date: 15-06-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 7'+ #13#10+'Build Date: 27-08-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -381,7 +385,7 @@ pm1.Items.Clear;
     if I=Grp then
     pm1.Items[I].Checked:=True;
     end;
-
+ stat1.Panels.Items[0].Text:=' '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
 end;
 
 procedure TNotesManMF.FillTListView(IgnoreSearchActive: Boolean=False);
@@ -422,6 +426,12 @@ Action:=caNone;
 end;
 end;
 
+procedure TNotesManMF.FormConstrainedResize(Sender: TObject; var MinWidth,
+  MinHeight, MaxWidth, MaxHeight: Integer);
+begin
+MinWidth:=700;
+end;
+
 procedure TNotesManMF.FormCreate(Sender: TObject);
 begin
   ReadSettings;
@@ -442,13 +452,7 @@ end;
 
 procedure TNotesManMF.FormResize(Sender: TObject);
 begin
-if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
-else
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
-
-if Width<700 then
-Width:=700;
+HandleComponentsWidth;
 if WindowState=wsMaximized then
   trMax:=True
 else if WindowState=wsNormal then
@@ -466,10 +470,7 @@ end;
 procedure TNotesManMF.FormShow(Sender: TObject);
 begin
    lv1.SetFocus;
-if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
-else
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
+//HandleComponentsWidth;
 end;
 
 procedure TNotesManMF.GithubPage1Click(Sender: TObject);
@@ -500,7 +501,17 @@ pm1.Items[I].Checked:=False;
 end;
 TMenuItem(Sender).Checked:=True;
 Grp:=TMenuItem(Sender).MenuIndex;
+stat1.Panels.Items[0].Text:=' '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
 FillTListView(True);
+end;
+
+procedure TNotesManMF.HandleComponentsWidth;
+begin
+if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
+else
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
+stat1.Panels.Items[0].Width:=lv1.Width;
 end;
 
 procedure TNotesManMF.HandleSubPopupItem(Sender: TObject);
@@ -556,6 +567,7 @@ if not InRange(Item.Index, 0, Length(FilterNotes) - 1) then
 Exit;
 Item.Caption:=(Length(FilterNotes)-Item.Index).ToString;
 Item.SubItems.Add(FilterNotes[Length(FilterNotes)-Item.Index-1][1]);
+HandleComponentsWidth;
 end;
 
 procedure TNotesManMF.lv1DblClick(Sender: TObject);
@@ -571,7 +583,7 @@ begin
 Key:=0;
 DeleteNote;
 end;
-if (ssCtrl in Shift) and ((Key = Ord('o')) or (Key = Ord('O'))) then
+if ((ssCtrl in Shift) and ((Key = Ord('o')) or (Key = Ord('O')))) or (Key = VK_RETURN) then
 begin
 Key:=0;
 ViewNote;

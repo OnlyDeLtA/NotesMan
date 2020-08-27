@@ -14,6 +14,7 @@ object NotesManMF: TNotesManMF
   Menu = mm1
   OldCreateOrder = False
   OnClose = FormClose
+  OnConstrainedResize = FormConstrainedResize
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
   OnResize = FormResize
@@ -245,6 +246,20 @@ object NotesManMF: TNotesManMF
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 2
+    object stat1: TStatusBar
+      Left = 0
+      Top = 0
+      Width = 984
+      Height = 25
+      Align = alClient
+      Panels = <
+        item
+          Width = 50
+        end
+        item
+          Width = 50
+        end>
+    end
   end
   object mm1: TMainMenu
     Images = il1
@@ -723,6 +738,7 @@ object NotesManMF: TNotesManMF
     Top = 219
   end
   object pm1: TPopupMenu
+    AutoHotkeys = maManual
     Left = 144
     Top = 216
   end
@@ -734,6 +750,7 @@ object NotesManMF: TNotesManMF
     Top = 224
   end
   object pm2: TPopupMenu
+    AutoHotkeys = maManual
     Left = 416
     Top = 224
     object ShowWindow1: TMenuItem
@@ -761,12 +778,13 @@ object NotesManMF: TNotesManMF
     end
   end
   object pm3: TPopupMenu
+    AutoHotkeys = maManual
     OnPopup = pm3Popup
     Left = 472
     Top = 224
     object View1: TMenuItem
       Caption = 'View'
-      ShortCut = 16463
+      ShortCut = 13
       OnClick = View1Click
     end
     object Delete1: TMenuItem

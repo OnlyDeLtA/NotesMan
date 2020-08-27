@@ -119,7 +119,7 @@ object Form2: TForm2
       BevelInner = bvNone
       BevelOuter = bvNone
       BiDiMode = bdLeftToRight
-      Font.Charset = DEFAULT_CHARSET
+      Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -15
       Font.Name = 'Segoe UI'

@@ -241,25 +241,18 @@ object NotesManMF: TNotesManMF
     Width = 984
     Height = 25
     Align = alBottom
+    Alignment = taLeftJustify
     BevelEdges = []
     BevelOuter = bvNone
     DoubleBuffered = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     ParentDoubleBuffered = False
+    ParentFont = False
     TabOrder = 2
-    object stat1: TStatusBar
-      Left = 0
-      Top = 0
-      Width = 984
-      Height = 25
-      Align = alClient
-      Panels = <
-        item
-          Width = 50
-        end
-        item
-          Width = 50
-        end>
-    end
   end
   object mm1: TMainMenu
     Images = il1
@@ -274,7 +267,7 @@ object NotesManMF: TNotesManMF
       end
       object Viewnote1: TMenuItem
         Caption = 'View note'
-        ShortCut = 16463
+        ShortCut = 13
         OnClick = Viewnote1Click
       end
       object Deletenote1: TMenuItem

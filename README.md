@@ -8,10 +8,10 @@
 
 ## Screens
 
-![Main and Editor window](https://i.imgur.com/Tm3iVcj.png)
+![Main and Editor window](https://i.imgur.com/yFgAAJi.png)
 <br>*main & editor window*
 
-![Preferences window](https://i.imgur.com/r7HAz3M.png)  
+![Preferences window](https://i.imgur.com/SykoSqi.png)  
 <br>*preferences window*
 
 ![Tray icon context menu](https://i.postimg.cc/NjwFncpt/sshot-167.png)<br>*tray context menu*
@@ -32,6 +32,6 @@ Icons are taken from the famfamfam silk icons and their license and terms can be
 ## Download
 
 Release binaries can be downloaded from [GitHub](https://github.com/OnlyDeLtA/NotesMan/releases).
- * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.7)
+ * [Download Latest Portable](https://github.com/OnlyDeLtA/NotesMan/releases/1.2.8)
 
   *For Windows XP, Vista, 7, 8, 8.1, 10 (32\64-bit)*

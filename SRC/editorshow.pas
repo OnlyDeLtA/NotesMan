@@ -237,6 +237,16 @@ begin
        WindowState := wsNormal;
      end;
      RichEdit1.Font.Size:=EditorFontSize;
+     if WordWrap then
+     begin
+     RichEdit1.WordWrap:=WordWrap;
+     RichEdit1.ScrollBars:=ssVertical;
+     end
+     else
+     begin
+     RichEdit1.WordWrap:=WordWrap;
+     RichEdit1.ScrollBars:=ssBoth;
+     end;
    finally
      Ini.Free;
    end;

@@ -22,6 +22,7 @@ type
     lbl1: TLabel;
     cbb1: TComboBox;
     chk6: TCheckBox;
+    chk7: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btn3Click(Sender: TObject);
     procedure btn2Click(Sender: TObject);
@@ -54,6 +55,7 @@ MinimizeST:=chk3.Checked;
 RememberEWP:=chk4.Checked;
 RememberEWS:=chk5.Checked;
 Autosave:=chk6.Checked;
+WordWrap:=chk7.Checked;
 if (StrToInt(cbb1.Items[cbb1.ItemIndex])>=10) and (StrToInt(cbb1.Items[cbb1.ItemIndex])<=15)then
 EditorFontSize:=StrToInt(cbb1.Items[cbb1.ItemIndex]);
 Form3.Close;
@@ -69,6 +71,7 @@ chk3.Checked:=MinimizeST;
 chk4.Checked:=RememberEWP;
 chk5.Checked:=RememberEWS;
 chk6.Checked:=AutoSave;
+chk7.Checked:=WordWrap;
 for I := 0 to cbb1.Items.Count-1 do
 begin
 if cbb1.Items[I]=EditorFontSize.ToString then

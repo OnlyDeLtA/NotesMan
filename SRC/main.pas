@@ -64,7 +64,6 @@ type
     Delete1: TMenuItem;
     MovetoGroup1: TMenuItem;
     ReportBug1: TMenuItem;
-    stat1: TStatusBar;
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure btn1Click(Sender: TObject);
@@ -141,6 +140,7 @@ var
   RememberEWP: Boolean;
   EditorFontSize: Integer;
   Autosave: Boolean;
+  WordWrap: Boolean;
 //VariableforHandlingTrayClicks
   trMax: Boolean;
   addfromclipb: Boolean=False;
@@ -152,7 +152,7 @@ implementation
 
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
-MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 7'+ #13#10+'Build Date: 27-08-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
+MessageDlg('Copyright © 2020 VNM Software'+ #13#10+'Version Info: 1.2 Release 8'+ #13#10+'Build Date: 07-09-2020'+#13#10+'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
 procedure TNotesManMF.Addanewgroup1Click(Sender: TObject);
@@ -385,7 +385,7 @@ pm1.Items.Clear;
     if I=Grp then
     pm1.Items[I].Checked:=True;
     end;
- stat1.Panels.Items[0].Text:=' '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
+ pnl3.Caption:='  '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
 end;
 
 procedure TNotesManMF.FillTListView(IgnoreSearchActive: Boolean=False);
@@ -501,17 +501,16 @@ pm1.Items[I].Checked:=False;
 end;
 TMenuItem(Sender).Checked:=True;
 Grp:=TMenuItem(Sender).MenuIndex;
-stat1.Panels.Items[0].Text:=' '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
+pnl3.Caption:='  '+Group[Grp].ToUpper+' ['+(Grp+1).ToString+'/'+Length(Group).ToString+']';
 FillTListView(True);
 end;
 
 procedure TNotesManMF.HandleComponentsWidth;
 begin
 if (GetWindowlong(lv1.Handle, GWL_STYLE) and WS_VSCROLL) <> 0 then
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5-GetSystemMetrics(SM_CXVSCROLL)
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-4-GetSystemMetrics(SM_CXVSCROLL)
 else
-lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-5;
-stat1.Panels.Items[0].Width:=lv1.Width;
+lv1.Columns[1].Width:=lv1.Width-lv1.Columns[0].Width-4;
 end;
 
 procedure TNotesManMF.HandleSubPopupItem(Sender: TObject);
@@ -655,6 +654,7 @@ Ini := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'NotesMan.ini' );
     Grp:=Ini.ReadInteger( 'General', 'ActiveGroup', 0);
     EditorFontSize:=Ini.ReadInteger('Editor','EditorFontSize',11);
     Autosave:=Ini.ReadBool('Editor','AutoSave',False);
+    WordWrap:=Ini.ReadBool('Editor','WordWrap',True);
     if RememberMWS then
      begin
      Height:= Ini.ReadInteger('General', 'MHeight', Height);
@@ -827,6 +827,7 @@ begin
      end;
      Ini.WriteInteger( 'Editor', 'EditorFontSize', EditorFontSize);
      Ini.WriteBool('Editor','AutoSave',Autosave);
+     Ini.WriteBool('Editor','WordWrap',WordWrap);
    finally
      Ini.Free;
    end;

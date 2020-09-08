@@ -13,6 +13,7 @@ object Form2: TForm2
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

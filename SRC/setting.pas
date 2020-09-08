@@ -3,8 +3,10 @@ unit setting;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.StdCtrls;
 
 type
   TForm3 = class(TForm)
@@ -40,46 +42,47 @@ implementation
 {$R *.dfm}
 
 uses
-main;
+  main;
 
 procedure TForm3.btn2Click(Sender: TObject);
 begin
-Form3.Close;
+  Form3.Close;
 end;
 
 procedure TForm3.btn3Click(Sender: TObject);
 begin
-RememberMWP:=chk1.Checked;
-RememberMWS:=chk2.Checked;
-MinimizeST:=chk3.Checked;
-RememberEWP:=chk4.Checked;
-RememberEWS:=chk5.Checked;
-Autosave:=chk6.Checked;
-WordWrap:=chk7.Checked;
-if (StrToInt(cbb1.Items[cbb1.ItemIndex])>=10) and (StrToInt(cbb1.Items[cbb1.ItemIndex])<=15)then
-EditorFontSize:=StrToInt(cbb1.Items[cbb1.ItemIndex]);
-Form3.Close;
+  RememberMWP := chk1.Checked;
+  RememberMWS := chk2.Checked;
+  MinimizeST := chk3.Checked;
+  RememberEWP := chk4.Checked;
+  RememberEWS := chk5.Checked;
+  Autosave := chk6.Checked;
+  WordWrap := chk7.Checked;
+  if (StrToInt(cbb1.Items[cbb1.ItemIndex]) >= 10) and
+    (StrToInt(cbb1.Items[cbb1.ItemIndex]) <= 15) then
+    EditorFontSize := StrToInt(cbb1.Items[cbb1.ItemIndex]);
+  Form3.Close;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 var
-I: Integer;
+  I: Integer;
 begin
-chk1.Checked:=RememberMWP;
-chk2.Checked:=RememberMWS;
-chk3.Checked:=MinimizeST;
-chk4.Checked:=RememberEWP;
-chk5.Checked:=RememberEWS;
-chk6.Checked:=AutoSave;
-chk7.Checked:=WordWrap;
-for I := 0 to cbb1.Items.Count-1 do
-begin
-if cbb1.Items[I]=EditorFontSize.ToString then
-begin
-cbb1.ItemIndex:=I;
-Break;
-end;
-end;
+  chk1.Checked := RememberMWP;
+  chk2.Checked := RememberMWS;
+  chk3.Checked := MinimizeST;
+  chk4.Checked := RememberEWP;
+  chk5.Checked := RememberEWS;
+  chk6.Checked := Autosave;
+  chk7.Checked := WordWrap;
+  for I := 0 to cbb1.Items.Count - 1 do
+  begin
+    if cbb1.Items[I] = EditorFontSize.ToString then
+    begin
+      cbb1.ItemIndex := I;
+      Break;
+    end;
+  end;
 
 end;
 

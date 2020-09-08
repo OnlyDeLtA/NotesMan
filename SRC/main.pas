@@ -156,7 +156,7 @@ implementation
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
   MessageDlg('Copyright © 2020 VNM Software' + #13#10 +
-    'Version Info: 1.2 Release 9' + #13#10 + 'Build Date: 07-09-2020' + #13#10 +
+    'Version Info: 1.2 Release 9' + #13#10 + 'Build Date: 08-09-2020' + #13#10 +
     'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 

@@ -26,7 +26,6 @@ object Form3: TForm3
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 282
     object grp1: TGroupBox
       Left = 7
       Top = 8
@@ -131,7 +130,6 @@ object Form3: TForm3
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 282
     object btn2: TButton
       Left = 88
       Top = 3

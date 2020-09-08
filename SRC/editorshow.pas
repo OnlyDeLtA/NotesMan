@@ -224,19 +224,19 @@ end;
 
 procedure TForm2.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
-R: Integer;
+  R: Integer;
 begin
   if (not Autosave) and (UnSaved) then
-   begin
-    R:=Application.MessageBox('Save note before exit?', 'Confirm',
-    (MB_YESNOCANCEL or MB_DEFBUTTON1 or MB_ICONQUESTION));
-    if R=ID_CANCEL then
-    CanClose := False
-    else if R=ID_YES then
-    Save
-    else if R=ID_NO then
-    CanClose:=True;
-   end;
+  begin
+    R := Application.MessageBox('Save note before exit?', 'Confirm',
+      (MB_YESNOCANCEL or MB_DEFBUTTON1 or MB_ICONQUESTION));
+    if R = ID_CANCEL then
+      CanClose := False
+    else if R = ID_YES then
+      Save
+    else if R = ID_NO then
+      CanClose := True;
+  end;
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);

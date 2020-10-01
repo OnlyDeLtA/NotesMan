@@ -156,7 +156,7 @@ implementation
 procedure TNotesManMF.AboutNotesMan1Click(Sender: TObject);
 begin
   MessageDlg('Copyright © 2020 VNM Software' + #13#10 +
-    'Version Info: 1.2 Release 9' + #13#10 + 'Build Date: 08-09-2020' + #13#10 +
+    'Version Info: 1.3 Release 1' + #13#10 + 'Build Date: 02-10-2020' + #13#10 +
     'Graphics by: http://www.famfamfam.com/', mtInformation, [mbOK], 0);
 end;
 
@@ -169,8 +169,10 @@ procedure TNotesManMF.AddfromClipboardd1Click(Sender: TObject);
 begin
   if not EditorFormexist then
   begin
+    Form1.Enabled := False;
     addfromclipb := True;
     AddNotes;
+    Form1.Enabled := True;
   end;
 end;
 
@@ -213,7 +215,11 @@ end;
 procedure TNotesManMF.AddNote2Click(Sender: TObject);
 begin
   if not EditorFormexist then
+  begin
+    Form1.Enabled := False;
     AddNotes;
+    Form1.Enabled := True;
+  end;
 end;
 
 procedure TNotesManMF.AddNotes;
@@ -656,10 +662,6 @@ procedure TNotesManMF.ReadSettings;
 var
   Ini: TIniFile;
 begin
-  if FileExists('NotesMan64.ini') then
-    MoveFileA(PWideChar(ExtractFilePath(Application.ExeName) +
-      'NotesMan64.ini'), PWideChar(ExtractFilePath(Application.ExeName) +
-      'NotesMan.ini'), False);
 
   Ini := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'NotesMan.ini');
   try

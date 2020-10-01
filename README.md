@@ -9,6 +9,7 @@
  * Feature to auto save notes.
  * Portable app no installation required.
 
+
 ## Screens
 
 ![Main and Editor window](https://i.imgur.com/yFgAAJi.png)
@@ -32,8 +33,10 @@ Project is compiled using Delphi 10.3.3. and uses VCL(Windows only) framework. T
 Icons are taken from the famfamfam silk icons and their license and terms can be found at
 <[https://creativecommons.org/licenses/by/2.5/](https://creativecommons.org/licenses/by/2.5/)>.
 
+
 ## NotesMan Reviews
 [MajorGeeks.Com](https://www.majorgeeks.com/files/details/notesman.html), [Softpedia.Com](https://www.softpedia.com/get/Office-tools/Diary-Organizers-Calendar/NotesMan.shtml), [gHacks.Net](https://www.ghacks.net/2020/08/27/notesman-is-a-simple-and-open-source-note-taking-program-that-supports-autosave/), [Libellules.ch](https://www.libellules.ch/phpBB2/viewtopic.php?f=52&t=47560).
+
 
 ## Download
 
